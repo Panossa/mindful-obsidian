@@ -1,4 +1,4 @@
-/* Sets all the text color to red! */
-body {
-    color: red;
+/* Sets the color of all trash icons of Obsidian to the error color (red as per default). */
+svg.trash {
+    color: var(--text-error);
 }
