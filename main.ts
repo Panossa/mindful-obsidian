@@ -1,9 +1,72 @@
-import { Plugin } from 'obsidian';
+import { App, Plugin, MenuItem, PluginSettingTab, Setting } from 'obsidian';
+import { around } from 'monkey-around';
 
-export default class MindfulObsidian extends Plugin {
+interface VerboseSettings {
+	// Whether important buttons should be highlighted. E.g. "Delete"
+	mindfulObsidian: boolean;
+}
+
+const DEFAULT_SETTINGS: VerboseSettings = {
+	mindfulObsidian: true
+}
+
+export default class VerboseStylizer extends Plugin {
+	settings: VerboseSettings;
+	
 	async onload() {
-		this.registerEvent(this.app.workspace.on("file-menu", () => {
-			console.log('Opened context menu');
+		this.register(around(MenuItem.prototype, {
+			setTitle(old) { 
+				return function(title: string | DocumentFragment) {
+					this.dom.dataset.stylizerTitle = String(title);
+					return old.call(this, title);
+				}; 
+			}
 		}));
+
+		this.register(around(MenuItem.prototype, {
+			setIcon(old) { 
+				return function(icon: string | DocumentFragment) {
+					this.dom.dataset.stylizerIcon = String(icon);
+					return old.call(this, icon);
+				}; 
+			}
+		}));
+
+		this.addSettingTab(new SampleSettingTab(this.app, this));
+	}
+
+	async loadSettings() {
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+	}
+
+	async saveSettings() {
+		await this.saveData(this.settings);
+	}
+}
+
+class SampleSettingTab extends PluginSettingTab {
+	plugin: VerboseStylizer;
+
+	constructor(app: App, plugin: VerboseStylizer) {
+		super(app, plugin);
+		this.plugin = plugin;
+	}
+
+	display(): void {
+		const {containerEl} = this;
+
+		containerEl.empty();
+		containerEl.createEl('h2', {text: 'Settings for this plugin.'});
+
+		new Setting(containerEl)
+			.setName('Highlight important decisions.')
+			.setDesc('This will highlight potentially critical actions such as "Delete" on a file.')
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.mindfulObsidian)
+				.onChange(async (value) => {
+					console.log('Setting mindfulness to: ' + value);
+					this.plugin.settings.mindfulObsidian = value;
+					await this.plugin.saveSettings();
+			}))
 	}
 }
