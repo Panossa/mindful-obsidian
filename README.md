@@ -6,6 +6,6 @@ Currently it uses --text-error as a highlight color for those actions. Might cha
 ## Install
 
 Click on the releases tab (probably to the right of this explanation), download it, extract the files from the .zip and put the plugin folder into your vault into this folder:
-/<your vault>/.obsidian/plugins/
+/your_vault_name/.obsidian/plugins/
 
 Then go to "Community Plugins" in Obsidian, click the reload button and enable this plugin.
