@@ -12,8 +12,10 @@ const DEFAULT_SETTINGS: VerboseSettings = {
 
 export default class VerboseStylizer extends Plugin {
 	settings: VerboseSettings;
-	
+
 	async onload() {
+		await this.loadSettings();
+
 		this.register(around(MenuItem.prototype, {
 			setTitle(old) { 
 				return function(title: string | DocumentFragment) {
@@ -27,12 +29,17 @@ export default class VerboseStylizer extends Plugin {
 			setIcon(old) { 
 				return function(icon: string | DocumentFragment) {
 					this.dom.dataset.stylizerIcon = String(icon);
+
+					if (this.menu.app.plugins.plugins['mindful-obsidian'].settings.mindfulObsidian && icon === 'trash') {
+						this.dom.addClass('stylize-error');
+					}
+
 					return old.call(this, icon);
 				}; 
 			}
 		}));
 
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new StylizerSettingTab(this.app, this));
 	}
 
 	async loadSettings() {
@@ -44,7 +51,7 @@ export default class VerboseStylizer extends Plugin {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
+class StylizerSettingTab extends PluginSettingTab {
 	plugin: VerboseStylizer;
 
 	constructor(app: App, plugin: VerboseStylizer) {
@@ -64,7 +71,6 @@ class SampleSettingTab extends PluginSettingTab {
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.mindfulObsidian)
 				.onChange(async (value) => {
-					console.log('Setting mindfulness to: ' + value);
 					this.plugin.settings.mindfulObsidian = value;
 					await this.plugin.saveSettings();
 			}))

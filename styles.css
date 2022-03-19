@@ -1,5 +1,3 @@
-/* Sets the color of all trash icons of Obsidian to the error color (red as per default). */
-svg.trash {
+.stylize-error *{
     color: var(--text-error);
 }
-
