@@ -30,7 +30,7 @@ export default class VerboseStylizer extends Plugin {
 				return function(icon: string | DocumentFragment) {
 					this.dom.dataset.stylizerIcon = String(icon);
 
-					if (this.menu.app.plugins.plugins['mindful-obsidian'].settings.mindfulObsidian && icon === 'trash') {
+					if (this.menu.app.plugins.plugins['verbose-stylizer'].settings.mindfulObsidian && icon === 'trash') {
 						this.dom.addClass('stylize-error');
 					}
 

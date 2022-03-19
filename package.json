@@ -1,7 +1,7 @@
 {
-	"name": "mindful-obsidian",
-	"version": "1.0.0",
-	"description": "Highlights file delete button in red",
+	"name": "verbose-stylizer",
+	"version": "1.0.1",
+	"description": "Allows for more styling options via CSS.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

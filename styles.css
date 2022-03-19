@@ -1,3 +1,20 @@
-.stylize-error *{
+/* Possible shorthand:
+div[data-stylizer-icon="trash"] *{
+    color: var(--text-error);
+}
+*/
+
+/* Arguably cleaner version as it only styles needed elements:
+div[data-stylizer-icon="trash"]>div.menu-item-icon>svg, 
+div[data-stylizer-icon="trash"]>div.menu-item-title{
+    color: var(--text-error);
+}
+*/
+
+/* My own way. This is needed to be toggleable via plugin settings: 
+    If you want to add your own toggleable settings, take a look at the code on my GitHub. :)
+*/
+div.stylize-error>div.menu-item-icon>svg, 
+div.stylize-error>div.menu-item-title {
     color: var(--text-error);
 }

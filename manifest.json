@@ -1,9 +1,9 @@
 {
-	"id": "mindful-obsidian",
-	"name": "Mindful Obsidian",
-	"version": "1.0.0",
+	"id": "verbose-stylizer",
+	"name": "Verbose Stylizer",
+	"version": "1.0.1",
 	"minAppVersion": "0.12.0",
-	"description": "Plugin to highlight potentially dangerous actions such as file deletion in a warning color.",
+	"description": "Plugin that allows for more styling options via CSS.",
 	"author": "Panossa",
 	"authorUrl": "https://twitter.com/PanossaYT",
 	"isDesktopOnly": true
